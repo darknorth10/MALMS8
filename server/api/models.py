@@ -64,4 +64,20 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         return self.first_name
     
     def __str__(self):
-        return self.email + ' | ' + self.email
+        return self.lrn + ' | ' + self.email
+    
+    
+    
+class ClassRoom(models.Model):
+
+    name = models.CharField(max_length=100, null=False)
+    code = models.CharField(max_length=50, null=False, unique=True)
+    teacher = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+    date_created = models.DateField(auto_now_add=False)
+    batch = models.CharField(max_length=50, null=False)
+    status = models.CharField(max_length=50, null=False)
+
+    def __str__(self):
+        return self.name
+
+

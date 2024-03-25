@@ -67,7 +67,7 @@ ROOT_URLCONF = 'server.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -141,9 +141,9 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': '/password/reset/confirm/{uid}/{token}',
-    'USERNAME_RESET_CONFIRM_URL': '/email/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': '/activate/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {
         'user_create': 'api.serializers.UserCreateSerializer',   
@@ -155,7 +155,12 @@ DJOSER = {
     'EMAIL_CHANGED_EMAIL_CONFIRMATION': True,
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
     'SEND_CONFIRMATION_EMAIL': True,
-    'SET_USERNAME_RETYPE': True
+    'SET_USERNAME_RETYPE': True,
+    
+    'EMAIL': {
+        'activation': 'api.email.ActivationEmail',
+        'confirmation': 'api.email.ConfirmationEmail',
+    }
 }
 
 # Internationalization
