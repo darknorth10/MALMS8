@@ -73,6 +73,8 @@ const defaultTheme = createTheme();
 
 export const InsideLayout = () => {
 
+  const role = localStorage.getItem('role')
+
   const [openSignout, setOpenSignOut] = React.useState(false);
 
   const handleSignoutOpen = () => {
@@ -136,11 +138,7 @@ export const InsideLayout = () => {
             >
               {pageName}
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="primary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -162,7 +160,7 @@ export const InsideLayout = () => {
           <List component="nav">
 
             {/* Nav insertion  */}
-            <MainListNav setOpenSignOut={setOpenSignOut} handleSignoutOpen={handleSignoutOpen}/>
+            <MainListNav setOpenSignOut={setOpenSignOut} handleSignoutOpen={handleSignoutOpen} role={role}/>
 
           </List>
         </Drawer>
@@ -181,7 +179,7 @@ export const InsideLayout = () => {
           <Toolbar />
           
           {/* Insertion point of the page */}
-          <div className='border max-w-screen-2xl p-5 mx-auto min-h-[70vh]'>
+          <div className='max-w-screen-2xl p-5 mx-auto min-h-[70vh]'>
             <Outlet context={{pageName, setPagename, current, setCurrent}} />
           </div>
 

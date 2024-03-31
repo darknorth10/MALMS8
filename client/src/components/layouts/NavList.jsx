@@ -14,12 +14,12 @@ import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { useNavigate } from "react-router-dom"
 
-export const mainListItems = ({setOpenSignOut, handleSignoutOpen}) => {
+export const mainListItems = ({setOpenSignOut, handleSignoutOpen, role}) => {
 
   const redirext = useNavigate()
 
-  const role = 'admin'
-  console.log(role)
+  // const role = 'admin'
+
 
   return (
   <>
@@ -42,14 +42,14 @@ export const mainListItems = ({setOpenSignOut, handleSignoutOpen}) => {
       </ListItemButton>
     </Tooltip>
 
-    {role && role == "admin" ? <Tooltip title="Accounts" placement="right-start">
+    {/* {role && role == "admin" ? <Tooltip title="Accounts" placement="right-start">
       <ListItemButton onClick={() => redirext('/accounts')}>
         <ListItemIcon>
           <PeopleIcon className='text-blue-gray-800' />
         </ListItemIcon>
         <ListItemText primary="Accounts" />
       </ListItemButton>
-    </Tooltip> : null}
+    </Tooltip> : null} */}
 
     <Tooltip title="Classes" placement="right-start">
       <ListItemButton onClick={() => redirext('/classes')}>

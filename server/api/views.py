@@ -6,5 +6,5 @@ from rest_framework import permissions, viewsets
 class UserViewSet(viewsets.ModelViewSet):
 
     queryset = UserAccount.objects.all().order_by('-date_joined')
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserCreateSerializer

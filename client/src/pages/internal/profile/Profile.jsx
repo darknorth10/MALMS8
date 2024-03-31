@@ -1,6 +1,6 @@
 import { useEffect  } from "react"
 import { useOutletContext } from "react-router-dom"
-
+import ProfileLayout from "../../../components/shared/profile/ProfileLayout";
 
 export const Profile = () => {
 
@@ -14,8 +14,8 @@ export const Profile = () => {
 
     }, [setPagename, setCurrent])
     return (
-        <div className="bg-blue-gray-50 w-full h-7/8 flex items-center justify-center">
-            
+        <div className="bg-white p-10 w-full flex items-center mt-4 rounded-md shadow-md justify-center">
+            <ProfileLayout />
         </div>
     )
 }

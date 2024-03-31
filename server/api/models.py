@@ -53,9 +53,14 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     role = models.CharField(max_length=50, choices=USER_ROLES)
     date_joined = models.DateField(auto_now_add=True)
     profile_img = models.URLField(max_length=255, default=default_img_url)
+    class_id = models.CharField(max_length=50, null=True)
+     
+    
     objects = UserAccountManager()
     USERNAME_FIELD = 'lrn'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'email', 'role']    
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email', 'role']
+    
+      
     
     def get_full_name(self):
         return self.first_name + ' ' + self.last_name
@@ -79,5 +84,6 @@ class ClassRoom(models.Model):
 
     def __str__(self):
         return self.name
+
 
 

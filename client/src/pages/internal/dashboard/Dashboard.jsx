@@ -34,7 +34,10 @@ export const Dashboard = () => {
         .then((response) => {
             setRole(response.data.role)
             localStorage.setItem("role", response.data.role)
-            console.log(response)
+            localStorage.setItem("lrn", response.data.lrn)
+            localStorage.setItem("id", response.data.id)
+            
+         
 
         })
         .catch((err) => {

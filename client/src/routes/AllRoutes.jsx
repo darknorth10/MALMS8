@@ -10,6 +10,7 @@ export default function AllRoutes() {
   return (
     <Routes>
         <Route element={<AuthLayout/>}>
+            <Route path='/' element={<Signin />} />
             <Route path='/signin' element={<Signin />} />
             <Route path='/signup' element={<Signup />} />
             <Route path='/activate/:uid/:token' element={<Activate />} />
