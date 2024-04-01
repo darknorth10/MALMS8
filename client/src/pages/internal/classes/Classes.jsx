@@ -23,7 +23,7 @@ export const Classes = () => {
 
     // check if the uer has joined a class
 
-    const [hasClass, setHasClass] = useState()
+    const [hasClass, setHasClass] = useState(false)
     const userID = localStorage.getItem('id')
     const role = localStorage.getItem('role')
 
@@ -60,7 +60,7 @@ export const Classes = () => {
     
     return (
         <div className=" w-full flex items-center justify-center">
-            {hasClass    ?  <>
+            {hasClass && hasClass == true  ?  <>
                 <h5>This account has already joined a class</h5>
                 
             </> :
