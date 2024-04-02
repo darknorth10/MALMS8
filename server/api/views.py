@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from . models import *
-from . serializers import UserCreateSerializer
+from . serializers import *
 from rest_framework import permissions, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -24,3 +24,9 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(users, many=True)
         
         return Response(serializer.data)
+    
+class ClassRoomViewSet(viewsets.ModelViewSet):
+
+    queryset = ClassRoom.objects.all().order_by('-id')
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = ClassRoomSerializer

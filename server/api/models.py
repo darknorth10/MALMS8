@@ -77,7 +77,7 @@ class ClassRoom(models.Model):
 
     name = models.CharField(max_length=100, null=False)
     code = models.CharField(max_length=50, null=False, unique=True)
-    teacher = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+    teacher = models.CharField(max_length=50, null=False)
     date_created = models.DateField(auto_now_add=False)
     batch = models.CharField(max_length=50, null=False)
     status = models.CharField(max_length=50, null=False)

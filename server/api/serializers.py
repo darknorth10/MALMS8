@@ -10,4 +10,4 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class ClassRoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClassRoom
-        fields = ('id', 'name', 'code', 'teacher_id', 'date_created', 'batch', 'status' )
+        fields = ('id', 'name', 'code', 'teacher', 'date_created', 'batch', 'status' )
