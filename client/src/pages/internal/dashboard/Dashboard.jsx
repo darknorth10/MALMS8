@@ -33,9 +33,11 @@ export const Dashboard = () => {
         })
         .then((response) => {
             setRole(response.data.role)
+            
             localStorage.setItem("role", response.data.role)
             localStorage.setItem("lrn", response.data.lrn)
             localStorage.setItem("id", response.data.id)
+            localStorage.setItem("email", response.data.email)
             
          
 

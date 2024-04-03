@@ -6,8 +6,98 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useFormik } from 'formik'
+import axios from 'axios';
 
-export default function CreateClassDialog({open, handleClose}) {
+function generateRandomAlphanumeric(length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters.charAt(randomIndex);
+  }
+  return result;
+}
+
+const randomString = generateRandomAlphanumeric(6);
+
+export default function CreateClassDialog({open, handleClose, setLoadingOpen, setShowAlert, setAlertStatus, setAlertText}) {
+
+  const initialValues = {
+    name: '',
+    code: randomString, 
+    teacher: localStorage.getItem('email'),
+    status: 'active'
+  }
+
+  const validate = values => {
+    let errors = {} 
+
+    if (values.name == '') {
+      errors.name = 'Field cannot be empty'
+    }
+
+    else if (values.name.length > 6 || values.name.length < 6 ) {
+      errors.name = 'Code must be 6 characters'
+    }
+
+    return errors
+  }
+
+  const token = localStorage.getItem('token')
+
+  const onSubmit = values => {
+
+    handleClose()
+    setLoadingOpen(true)
+
+    axios.post('http://localhost:8000/api/classes/', values, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then((response) => {
+
+      //console.log(response)
+      let id  = localStorage.getItem('id')
+      let class_id  = response.data.id
+
+      axios.patch(`http://localhost:8000/api/users/${id}/`, { class_id:class_id }, {
+        
+        headers: {
+          Authorization: `Token ${token}`
+        }
+
+      })
+      .then((response) => {
+
+        setAlertStatus("success")
+        setAlertText("Successfully created a class.")
+        
+        setTimeout(() => {
+
+          setLoadingOpen(false)
+          setShowAlert(true)
+
+        }, 1300);
+
+      }).catch((err) => {
+        console.log(err)
+      })
+
+    }).catch((err) => {
+      console.log(err)
+    })
+
+  }
+
+
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+    validate,
+    enableReinitialize: true
+  })
 
   return (
     <React.Fragment>
@@ -17,14 +107,7 @@ export default function CreateClassDialog({open, handleClose}) {
         onClose={handleClose}
         PaperProps={{
           component: 'form',
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const email = formJson.email;
-            console.log(email);
-            handleClose();
-          },
+          onSubmit: formik.handleSubmit,
         }}
       >
         <DialogTitle>Create Class</DialogTitle>
@@ -34,15 +117,20 @@ export default function CreateClassDialog({open, handleClose}) {
           </DialogContentText>
           <TextField
             autoFocus
-            required
+            
             margin="dense"
             name="name"
             label="Class Name"
-            type="text"
+            type="name"
             fullWidth
             variant="outlined"
             size='small'
+            onChange={formik.handleChange}
+            error={
+              Boolean(formik.errors.name)
+            }
           />
+          {formik.errors.name && <p className='text-sm text-red-600 m-3'>* {formik.errors.name}</p>}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

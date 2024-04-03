@@ -6,8 +6,14 @@ import Loading from "../../../components/shared/Loading"
 import { useNavigate } from "react-router-dom"
 import axios from 'axios'
 import CreateClassDialog from "../../../components/shared/class/CreateClassDialog"
+import { AlertBox } from "../../../components/shared/AlertBox"
+
 
 export const Classes = () => {
+    const [showAlert, setShowAlert] = useState(false)
+    const [alertText, setAlertText] = useState("")
+    const [alertStatus, setAlertStatus] = useState("")
+
 
     // for calling the loading component
     const [loadingOpen, setLoadingOpen] = useState(false)
@@ -79,7 +85,13 @@ export const Classes = () => {
 
     
     return (
+        <>
+        <AlertBox alertStatus={alertStatus} alertText={alertText} setShowAlert={setShowAlert} showAlert={showAlert} set />
+        
         <div className=" w-full flex items-center justify-center animate-fade animate-ease-in-out">
+
+            
+
             {role && role == "student" ? <> {hasClass && hasClass == true ?
                 <h5>This account has already joined a class</h5>
                 
@@ -107,21 +119,24 @@ export const Classes = () => {
             <div className="h-[60vh] w-full flex items-center justify-center">
                 <div className="p-10 flex-auto h-1/2 flex flex-col justify-center items-center gap-7">
                     <img src={ClassIllustration} alt="Class Invite" className="h-60" />
-                    <p className="text-xl text-center text-blue-gray-600">You are not currently in a class. <br /> To create a class you will be needing to create one yourself.</p>
+                    <p className="text-xl text-center text-blue-gray-600">You are not currently in a class. <br /> To manage a class you will be needing to create one yourself.</p>
 
                     <Button color="success" variant="contained" size="large" className="w-full md:w-auto" onClick={handleClickOpen} >Create Now</Button>
                 </div>
                 
-                <Loading loadingOpen={loadingOpen}/>
+                
 
-                <CreateClassDialog open={open} handleClose={handleClose} />
+                <CreateClassDialog setLoadingOpen={setLoadingOpen} open={open} handleClose={handleClose} setAlertStatus={setAlertStatus} setAlertText={setAlertText} setShowAlert={setShowAlert} />
             </div>
             
             
             }  </> : null}
 
-            
+            <Loading loadingOpen={loadingOpen}/>
         </div>
+        </>
+
+        
     )
 }
 
