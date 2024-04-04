@@ -10,7 +10,7 @@ import { AlertBox } from "../../../components/shared/AlertBox"
 
 
 export const Classes = () => {
-    const [showAlert, setShowAlert] = useState(false)
+    const [showAlert, setShowAlert] = useState( )
     const [alertText, setAlertText] = useState("")
     const [alertStatus, setAlertStatus] = useState("")
 
@@ -53,7 +53,11 @@ export const Classes = () => {
     const role = localStorage.getItem('role')
 
 
+
+    const { setPagename, setCurrent } = useOutletContext();
+
     useEffect(() => {
+
         axios.get(`http://localhost:8000/api/users/${userID}/`, {
             headers: {
                 Authorization: "Token " + localStorage.getItem('token')
@@ -69,24 +73,28 @@ export const Classes = () => {
             console.log(err)
         })
 
-
-    }, [])
-
-
-    const { setPagename, setCurrent } = useOutletContext();
-    useEffect(() => {
         // set page name
         setPagename("Classes")
 
         // indicate that this is the current page
         setCurrent(true)
 
-    }, [setPagename, setCurrent])
+
+        // check if user has already a class
+
+        if (role == 'teacher' || role == 'admin' && hasClass) {
+            redirect('/my-class')
+        } else if (role == 'student' && hasClass) {
+            redirect('/classroom')
+        }
+
+    }, [setPagename, setCurrent, role, hasClass, redirect, userID])
 
     
     return (
         <>
-        <AlertBox alertStatus={alertStatus} alertText={alertText} setShowAlert={setShowAlert} showAlert={showAlert} set />
+
+        {showAlert && <AlertBox alertStatus={alertStatus} alertText={alertText} setShowAlert={setShowAlert} showAlert={showAlert} />}
         
         <div className=" w-full flex items-center justify-center animate-fade animate-ease-in-out">
 
@@ -111,9 +119,8 @@ export const Classes = () => {
             
             }  </> : null}
 
-            {role && role == "admin" || role == "teacher" ? <> {hasClass && hasClass == true ?
-                <h5>This account has already joined a class</h5>
-                
+            {role && role == "admin" || role == "teacher" ? <> {hasClass && hasClass == true ?      
+                null
             : // else
 
             <div className="h-[60vh] w-full flex items-center justify-center">
@@ -133,6 +140,7 @@ export const Classes = () => {
             }  </> : null}
 
             <Loading loadingOpen={loadingOpen}/>
+
         </div>
         </>
 

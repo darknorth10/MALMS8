@@ -9,12 +9,10 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems as MainListNav } from './NavList';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import logo from '../../assets/img/logo_nobg.png'
 import SignOutDialog from '../shared/SignOutDialog';
 import Loading from '../shared/Loading';
@@ -72,6 +70,7 @@ const defaultTheme = createTheme();
 
 
 export const InsideLayout = () => {
+  const redirect = useNavigate()
 
   const role = localStorage.getItem('role')
 
@@ -94,7 +93,11 @@ export const InsideLayout = () => {
     setLoadingOpen(true);
   };
 
-
+  React.useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      redirect('/')
+    }
+  }, [redirect])
 
 
   const [pageName, setPagename] = React.useState("");

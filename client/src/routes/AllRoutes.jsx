@@ -1,9 +1,8 @@
-import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { AuthLayout } from '../components/layouts/AuthLayout'
 import { InsideLayout } from '../components/layouts/InsideLayout'
 import { Signin, Signup, Activate } from '../pages/auth'
-import { JoinClass, Dashboard, Classes, Accounts, GroupChats, Activities, Profile } from '../pages/internal'
+import { JoinClass, Dashboard, Classes, Accounts, GroupChats, Activities, Profile, MyClass, ClassRoom } from '../pages/internal'
 
 
 export default function AllRoutes() {
@@ -18,6 +17,8 @@ export default function AllRoutes() {
         <Route element={<InsideLayout/>}>
             <Route path='/join-class' element={<JoinClass/>} />
             <Route path='/classes' element={<Classes/>} />
+            <Route path='/classroom' element={<ClassRoom />} />
+            <Route path='/my-class' element={<MyClass/>} />
             <Route path='/dashboard' element={<Dashboard/>} />
             <Route path='/chats' element={<GroupChats/>} />
             <Route path='/accounts' element={<Accounts/>} />

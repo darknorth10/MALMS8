@@ -11,3 +11,5 @@ class ClassRoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClassRoom
         fields = ('id', 'name', 'code', 'teacher', 'date_created', 'batch', 'status' )
+        
+        

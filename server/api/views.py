@@ -30,3 +30,16 @@ class ClassRoomViewSet(viewsets.ModelViewSet):
     queryset = ClassRoom.objects.all().order_by('-id')
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = ClassRoomSerializer
+    
+    @action(detail=True, methods=['get'])
+    def code(self, request,  pk):
+        classroom = ClassRoom.objects.filter(code=pk)
+        page = self.paginate_queryset(classroom)
+        
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        
+        serializer = self.get_serializer(classroom, many=True)
+        
+        return Response(serializer.data)
