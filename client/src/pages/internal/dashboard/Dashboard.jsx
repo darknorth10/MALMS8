@@ -32,6 +32,7 @@ export const Dashboard = () => {
             }
         })
         .then((response) => {
+
             setRole(response.data.role)
             
             localStorage.setItem("role", response.data.role)
@@ -121,7 +122,7 @@ export const Dashboard = () => {
         <h3 className="p-4 uppercase font-black text-xl text-blue-gray-700 tracking-wide">Progress</h3>
         
         <div className="shadow rounded-md bg-white min-h-24 p-8 mb-6">
-            <ProgressBar statusText={"Ongoing"} progressValue={"30"} percentage={"30"}/>
+            <ProgressBar statusText={"Ongoing"} progressValue={30} percentage={30}/>
         </div>
         <h3 className="p-4 uppercase font-black text-xl text-blue-gray-700 tracking-wide">Quick Links</h3>
         

@@ -2,8 +2,13 @@ import { Routes, Route } from 'react-router-dom'
 import { AuthLayout } from '../components/layouts/AuthLayout'
 import { InsideLayout } from '../components/layouts/InsideLayout'
 import { Signin, Signup, Activate } from '../pages/auth'
-import { JoinClass, Dashboard, Classes, Accounts, GroupChats, Activities, Profile, MyClass, ClassRoom } from '../pages/internal'
+import { JoinClass, Dashboard, Classes, Accounts, GroupChats, Activities, Profile, MyClass, ClassRoom }
+from '../pages/internal'
 
+import {
+  Module1
+}
+from '../pages/modules/index'
 
 export default function AllRoutes() {
   return (
@@ -24,6 +29,10 @@ export default function AllRoutes() {
             <Route path='/accounts' element={<Accounts/>} />
             <Route path='/activities' element={<Activities/>} />
             <Route path='/my-profile' element={<Profile/>} />
+        </Route>
+
+        <Route element={<InsideLayout/>}>
+            <Route path='/module/1/1' element={<Module1/>}/> 
         </Route>
     </Routes>
 

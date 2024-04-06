@@ -50,6 +50,7 @@ export const Signin = () => {
     const [alertText, setAlertText] = useState("")
     const [alertIcon, setAlertIcon] = useState("")
     const [alertStatus, setAlertStatus] = useState("")
+    const [userCred, setUserCred] = useState({})
   
     // loading backdrop
     const [loadingOpen, setLoadingOpen] = useState(false);
@@ -67,15 +68,17 @@ export const Signin = () => {
   const onSubmit = (values) => {
     handleOpen()
 
-    axios.post("http://127.0.0.1:8000/auth/token/login/", values,{})
+    axios.post("http://127.0.0.1:8000/auth/token/login/", values, {})
     .then((response) => {
         
         let token = response.data.auth_token
         localStorage.setItem('token', token)
+ 
 
         setAlertStatus("success")
         setAlertText("Success: Redirecting...")
         setShowAlert(true)
+
 
         setTimeout(() => {
 
@@ -83,6 +86,7 @@ export const Signin = () => {
           redirect("/dashboard")
 
         }, 1500);
+        
 
     }).catch((err) => {
       setAlertStatus("error")

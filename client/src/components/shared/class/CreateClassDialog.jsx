@@ -23,7 +23,7 @@ function generateRandomAlphanumeric(length) {
 
 const randomString = generateRandomAlphanumeric(6);
 
-export default function CreateClassDialog({open, handleClose, setLoadingOpen, setShowAlert, setAlertStatus, setAlertText}) {
+export default function CreateClassDialog({open, handleClose, setLoadingOpen, setShowAlert, setAlertStatus, setAlertText, setHasClass}) {
 
   const initialValues = {
     name: '',
@@ -37,10 +37,6 @@ export default function CreateClassDialog({open, handleClose, setLoadingOpen, se
 
     if (values.name == '') {
       errors.name = 'Field cannot be empty'
-    }
-
-    else if (values.name.length > 6 || values.name.length < 6 ) {
-      errors.name = 'Code must be 6 characters'
     }
 
     return errors
@@ -63,7 +59,8 @@ export default function CreateClassDialog({open, handleClose, setLoadingOpen, se
       //console.log(response)
       let id  = localStorage.getItem('id')
       let class_id  = response.data.id
-
+      localStorage.setItem('class_code', response.data.code)
+      
       axios.patch(`http://localhost:8000/api/users/${id}/`, { class_id:class_id }, {
         
         headers: {
@@ -74,14 +71,23 @@ export default function CreateClassDialog({open, handleClose, setLoadingOpen, se
       .then((response) => {
 
         setAlertStatus("success")
+
         setAlertText("Successfully created a class.")
         
         setTimeout(() => {
 
           setLoadingOpen(false)
           setShowAlert(true)
+          
+          
 
         }, 1300);
+
+        setTimeout(() => {
+
+          setHasClass('yes')
+
+        }, 3000);
 
       }).catch((err) => {
         console.log(err)

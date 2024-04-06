@@ -47,7 +47,7 @@ export const Classes = () => {
     }
     // check if the uer has joined a class
 
-    const [hasClass, setHasClass] = useState(false)
+    const [hasClass, setHasClass] = useState("")
 
     const userID = localStorage.getItem('id')
     const role = localStorage.getItem('role')
@@ -65,7 +65,9 @@ export const Classes = () => {
         }).then((response) => {
 
             if (response.data.class_id != null) {
-                setHasClass(true)
+                setHasClass('yes')
+                localStorage.setItem("class_id", response.data.class_id)
+
             }
 
 
@@ -100,7 +102,7 @@ export const Classes = () => {
 
             
 
-            {role && role == "student" ? <> {hasClass && hasClass == true ?
+            {role && role == "student" ? <> {hasClass && hasClass == "yes" ?
                 <h5>This account has already joined a class</h5>
                 
             : // else
@@ -119,8 +121,8 @@ export const Classes = () => {
             
             }  </> : null}
 
-            {role && role == "admin" || role == "teacher" ? <> {hasClass && hasClass == true ?      
-                null
+            {role && role == "admin" || role == "teacher" ? <> {hasClass && hasClass == "yes" ?      
+                <h5>This account has already joined a class</h5>
             : // else
 
             <div className="h-[60vh] w-full flex items-center justify-center">
@@ -133,7 +135,7 @@ export const Classes = () => {
                 
                 
 
-                <CreateClassDialog setLoadingOpen={setLoadingOpen} open={open} handleClose={handleClose} setAlertStatus={setAlertStatus} setAlertText={setAlertText} setShowAlert={setShowAlert} />
+                <CreateClassDialog setLoadingOpen={setLoadingOpen} open={open} handleClose={handleClose} setAlertStatus={setAlertStatus} setAlertText={setAlertText} setShowAlert={setShowAlert} setHasClass={setHasClass}/>
             </div>
             
             

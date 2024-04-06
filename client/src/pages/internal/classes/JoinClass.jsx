@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useOutletContext } from "react-router-dom"
+import { useOutletContext, useNavigate } from "react-router-dom"
 import { Input, Button } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import axios from "axios";
@@ -13,7 +13,9 @@ export const JoinClass = () => {
 
     const token = localStorage.getItem('token')
 
-    const { setPagename, setCurrent } = useOutletContext();
+    const redirect = useNavigate()
+
+    const { setPagename, setCurrent, setLoadingOpen } = useOutletContext();
     useEffect(() => {
         // set page name
         setPagename("Join Class")
@@ -43,6 +45,7 @@ export const JoinClass = () => {
     }
 
     const onSubmit = values => {
+        
         axios.get(`http://127.0.0.1:8000/api/classes/${values.code}/code/`, {
             headers: {
                 Authorization: `Token ${token}`
@@ -51,6 +54,31 @@ export const JoinClass = () => {
             .then((response) => {
                 if (response.data.count == 1) {
                     console.log(response)
+
+                    let id = localStorage.getItem('id')
+                    
+                    localStorage.setItem('class_id', response.data.results[0].id)
+
+                    axios.patch(`http://localhost:8000/api/users/${id}/`, { class_id: response.data.results[0].id }, {
+                        headers: {
+                            Authorization: `Token ${token}`
+                        }
+                    })
+                    .then((response) => {
+                        setLoadingOpen(true)
+                        
+                        setTimeout(() => {
+                            setLoadingOpen(false)
+                            redirect('/classroom')
+                        }, 1300);
+                    })
+                    .catch((err) => {
+                        setAlertStatus("error")
+                        setAlertText("Invalid class code.")
+                        setShowAlert(true)
+                    })
+
+
                 }
 
                 else if (response.data.count == 0) {

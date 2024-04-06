@@ -183,7 +183,7 @@ export const InsideLayout = () => {
           
           {/* Insertion point of the page */}
           <div className='max-w-screen-2xl p-5 mx-auto min-h-[70vh]'>
-            <Outlet context={{pageName, setPagename, current, setCurrent}} />
+            <Outlet context={{pageName, setPagename, current, setCurrent, setLoadingOpen}} />
           </div>
 
         </Box>

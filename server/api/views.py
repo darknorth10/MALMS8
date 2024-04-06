@@ -25,6 +25,19 @@ class UserViewSet(viewsets.ModelViewSet):
         
         return Response(serializer.data)
     
+    @action(detail=True, methods=['get'])   
+    def enrolled(self, request,  pk):
+        users = UserAccount.objects.filter(class_id=pk)
+        page = self.paginate_queryset(users)
+        
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        
+        serializer = self.get_serializer(users, many=True)
+        
+        return Response(serializer.data)
+    
 class ClassRoomViewSet(viewsets.ModelViewSet):
 
     queryset = ClassRoom.objects.all().order_by('-id')
