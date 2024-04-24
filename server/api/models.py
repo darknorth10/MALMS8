@@ -85,5 +85,35 @@ class ClassRoom(models.Model):
     def __str__(self):
         return self.name
 
+class MasteryLevel(models.Model):
+    student = models.ForeignKey(UserAccount,  on_delete=models.CASCADE)
+    level = models.DecimalField(max_digits=2, decimal_places=1, null=False)
+    
+    def __str__(self) -> str:
+        return self.student
+    
+    
+    
+class Assessment(models.Model):
+    TEST_TYPES = {
+        "formative": "FORMATIVE",
+        "post_test": "POST-TEST",
+        "pre_test": "PRE-TEST",
+    }
+    
+    level = models.DecimalField(max_digits=2, decimal_places=1)
+    
+    type_of = models.CharField(max_length=50, null=False, choices=TEST_TYPES)
+    items = models.IntegerField(null=False)
 
-
+    def __str__(self) -> str:
+        return self.level
+    
+class Score(models.Model):
+    student = models.ForeignKey(UserAccount,  on_delete=models.CASCADE)
+    assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE)
+    score = models.IntegerField(null=True)
+    remarks = models.CharField(max_length=50, null=True)
+    
+    def __str__(self):
+        return self.student

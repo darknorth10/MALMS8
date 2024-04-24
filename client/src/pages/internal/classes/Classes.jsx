@@ -58,6 +58,8 @@ export const Classes = () => {
 
     useEffect(() => {
 
+        setLoadingOpen(true)
+
         axios.get(`http://localhost:8000/api/users/${userID}/`, {
             headers: {
                 Authorization: "Token " + localStorage.getItem('token')
@@ -67,7 +69,7 @@ export const Classes = () => {
             if (response.data.class_id != null) {
                 setHasClass('yes')
                 localStorage.setItem("class_id", response.data.class_id)
-
+                setLoadingOpen(false)
             }
 
 
@@ -121,11 +123,11 @@ export const Classes = () => {
             
             }  </> : null}
 
-            {role && role == "admin" || role == "teacher" ? <> {hasClass && hasClass == "yes" ?      
+            {!loadingOpen && role == "admin" || role == "teacher" ? <> {hasClass && hasClass == "yes" ?      
                 <h5>This account has already joined a class</h5>
             : // else
 
-            <div className="h-[60vh] w-full flex items-center justify-center">
+            <div className="h-[60vh] w-full flex items-center justify-center animate-fade">
                 <div className="p-10 flex-auto h-1/2 flex flex-col justify-center items-center gap-7">
                     <img src={ClassIllustration} alt="Class Invite" className="h-60" />
                     <p className="text-xl text-center text-blue-gray-600">You are not currently in a class. <br /> To manage a class you will be needing to create one yourself.</p>

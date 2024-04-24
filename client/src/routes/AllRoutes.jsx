@@ -6,7 +6,7 @@ import { JoinClass, Dashboard, Classes, Accounts, GroupChats, Activities, Profil
 from '../pages/internal'
 
 import {
-  Module1
+  Module1, Module2, Module3, Module4, Module5, Module6, Module7
 }
 from '../pages/modules/index'
 
@@ -33,6 +33,12 @@ export default function AllRoutes() {
 
         <Route element={<InsideLayout/>}>
             <Route path='/module/1/1' element={<Module1/>}/> 
+            <Route path='/module/1/2' element={<Module2/>}/> 
+            <Route path='/module/1/3' element={<Module3/>}/> 
+            <Route path='/module/1/4' element={<Module4/>}/> 
+            <Route path='/module/1/5' element={<Module5/>}/> 
+            <Route path='/module/1/6' element={<Module6/>}/> 
+            <Route path='/module/1/7' element={<Module7/>}/> 
         </Route>
     </Routes>
 

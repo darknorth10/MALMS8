@@ -1,6 +1,6 @@
 @echo off
 title Run venv
 
-cd ./server/venv/Scripts && activate && cd ../../
+cd ./.venv/Scripts && activate && cd ../../server
 
 pause

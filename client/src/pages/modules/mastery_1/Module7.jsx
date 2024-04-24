@@ -4,18 +4,20 @@ import {
     TabsBody,
     Tab,
     TabPanel,
-    Typography
   } from "@material-tailwind/react";
 import { Materials } from "./Materials";
-import module1 from "../../../assets/pdf/modules/mastery_1/module1.pdf"
+import module from "../../../assets/pdf/modules/mastery_1/module7.pdf"
 import { useState } from "react";
 import RelatedVideo from "../../../components/shared/modules/RelatedVideo";
 
 
-  export const Module1 = () => {
+  export const Module7 = () => {
 
-    const [moduleSrc, setModuleSrc] = useState(module1)
-    const videoId = "01WLS9X3FhY"
+    const [moduleSrc, setModuleSrc] = useState(module)
+
+
+    const videoId = "NSol-DeDm7A"
+
     
     const role = localStorage.getItem('role')
     
@@ -23,16 +25,15 @@ import RelatedVideo from "../../../components/shared/modules/RelatedVideo";
       {
         label: "Materials",
         value: "materials",
-        desc: <Materials moduleSrc={`${moduleSrc}`} title={"Mastery Level 1 Module 1"}/>,
+        desc: <Materials moduleSrc={`${moduleSrc}`} title={"Mastery Level 1 Module 7"}/>,
       },
       {
         label: "Videos",
         value: "videos",
         desc: <>
-          <p className="font-semibold p-5 text-xl text-center">To further understand the concepts of mean, median and mode, please watch the
-            linked video:</p>
-          <RelatedVideo videoId={videoId} />
-        </>,
+        <p className="font-semibold p-5 text-xl text-center">Hey there amazing learner! To provide you additional information about our lesson that you might use for higher level of learning later on, we have attached the following videos.</p>
+          <RelatedVideo videoId={videoId}/>
+          </>,
       },
       {
         label: "Activities",

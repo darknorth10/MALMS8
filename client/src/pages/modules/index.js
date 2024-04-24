@@ -1,1 +1,7 @@
 export { Module1 } from './mastery_1/Module1'
+export { Module2 } from './mastery_1/Module2'
+export { Module3 } from './mastery_1/Module3'
+export { Module4 } from './mastery_1/Module4'
+export { Module5 } from './mastery_1/Module5'
+export { Module6 } from './mastery_1/Module6'
+export { Module7 } from './mastery_1/Module7'

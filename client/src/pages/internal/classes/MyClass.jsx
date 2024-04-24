@@ -51,7 +51,7 @@ export const MyClass = () => {
 
   ];
   return (
-    <>
+    <div className="animate-fade">
     <p className="text-center my-5 text-blue-800 font-bold rounded drop-shadow bg-white p-5">Join Code: {code}</p>
     <Tabs className="bg-white drop-shadow-md rounded-md" value={activeTab}>
       <TabsHeader
@@ -80,6 +80,6 @@ export const MyClass = () => {
         ))}
       </TabsBody>
     </Tabs>
-    </>
+    </div>
   );
 }
