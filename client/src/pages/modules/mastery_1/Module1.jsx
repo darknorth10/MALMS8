@@ -4,21 +4,42 @@ import {
     TabsBody,
     Tab,
     TabPanel,
-    Typography
+    Typography,
+    
   } from "@material-tailwind/react";
 import { Materials } from "./Materials";
 import module1 from "../../../assets/pdf/modules/mastery_1/module1.pdf"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import RelatedVideo from "../../../components/shared/modules/RelatedVideo";
-
+import { AssessmentButton } from "../../../components/shared/modules/AssessmentButton";
+import { Act1Module1 } from "../../../components/shared/activity/Act1Module1";
+import { References } from "../../../components/shared/references/References";
+import refImg from "../../../assets/refs/ref_1.png"
 
   export const Module1 = () => {
 
+    const [disable, setDisable] = useState(true)
+
+    const current_mastery = parseFloat(localStorage.getItem("mastery"))
+
     const [moduleSrc, setModuleSrc] = useState(module1)
+
     const videoId = "01WLS9X3FhY"
     
-    const role = localStorage.getItem('role')
+    const videoId2 = "k3aKKasOmIw"
     
+    const role = localStorage.getItem('role')
+
+    const url = "/formative/2/"
+
+    useEffect(() => {
+
+      if(current_mastery == 1.1) {
+        setDisable(false)
+      }
+
+    }, [])
+
     const data = [
       {
         label: "Materials",
@@ -31,29 +52,31 @@ import RelatedVideo from "../../../components/shared/modules/RelatedVideo";
         desc: <>
           <p className="font-semibold p-5 text-xl text-center">To further understand the concepts of mean, median and mode, please watch the
             linked video:</p>
-          <RelatedVideo videoId={videoId} />
+            <div className="grid grid-cols-1 gap-8">
+              <RelatedVideo videoId={videoId} />
+              <RelatedVideo videoId={videoId2} />
+            </div>
+          
         </>,
       },
       {
         label: "Activities",
         value: "activities",
-        desc: `Because it's about motivating the doers. Because I'm here
-        to follow my dreams and inspire other people to follow their dreams, too.`,
+        desc:
+        <div className="max-w-screen-2xl bg-white rounded min-h-[50vh] mx-auto drop-shadow p-8">
+          <Act1Module1/>
+        </div>,
       },
    
       {
         label: "Assessment",
         value: "assessment",
-        desc: `We're not always in the position that we want to be at.
-        We're constantly growing. We're constantly making mistakes. We're
-        constantly trying to express ourselves and actualize our dreams.`,
+        desc: <AssessmentButton disable={disable} url={url}/>,
       },
       {
         label: "References",
         value: "references",
-        desc: `We're not always in the position that we want to be at.
-        We're constantly growing. We're constantly making mistakes. We're
-        constantly trying to express ourselves and actualize our dreams.`,
+        desc: <References refImg={refImg}/>,
       },
 
     ];

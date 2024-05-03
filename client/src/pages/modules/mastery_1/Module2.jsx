@@ -7,17 +7,31 @@ import {
   } from "@material-tailwind/react";
 import { Materials } from "./Materials";
 import module2 from "../../../assets/pdf/modules/mastery_1/module2.pdf"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import RelatedVideo from "../../../components/shared/modules/RelatedVideo";
-
+import { AssessmentButton } from "../../../components/shared/modules/AssessmentButton";
+import { ActsModule2 } from "../../../components/shared/activity/ActsModule2";
+import { References } from "../../../components/shared/references/References";
+import refImg from "../../../assets/refs/ref_2.png"
 
   export const Module2 = () => {
+    const [disable, setDisable] = useState(true)
+    const current_mastery = parseFloat(localStorage.getItem("mastery"))
 
     const [moduleSrc, setModuleSrc] = useState(module2)
     const videoId = "vtiDZeRHOoo"
     const videoId2 = "yZETkRWMvMg"
     
     const role = localStorage.getItem('role')
+    const url = "/formative/3/"
+
+    useEffect(() => {
+
+      if(current_mastery == 1.2) {
+        setDisable(false)
+      }
+
+    }, [])
     
     const data = [
       {
@@ -39,23 +53,20 @@ import RelatedVideo from "../../../components/shared/modules/RelatedVideo";
       {
         label: "Activities",
         value: "activities",
-        desc: `Because it's about motivating the doers. Because I'm here
-        to follow my dreams and inspire other people to follow their dreams, too.`,
+        desc: <div className="max-w-screen-2xl bg-white rounded min-h-[50vh] mx-auto drop-shadow p-8">
+        <ActsModule2/>
+      </div>,
       },
    
       {
         label: "Assessment",
         value: "assessment",
-        desc: `We're not always in the position that we want to be at.
-        We're constantly growing. We're constantly making mistakes. We're
-        constantly trying to express ourselves and actualize our dreams.`,
+        desc: <AssessmentButton disable={disable} url={url}/>,
       },
       {
         label: "References",
         value: "references",
-        desc: `We're not always in the position that we want to be at.
-        We're constantly growing. We're constantly making mistakes. We're
-        constantly trying to express ourselves and actualize our dreams.`,
+        desc: <References refImg={refImg}/>,
       },
 
     ];

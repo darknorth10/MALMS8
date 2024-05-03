@@ -2,6 +2,13 @@ import { PaperClipIcon, PencilIcon, PencilSquareIcon } from '@heroicons/react/20
 import { Button } from '@material-tailwind/react'
 
 export default function ProfileLayout() {
+
+
+  const name = `${localStorage.getItem("firstname")} ${localStorage.getItem('lastname')}`;
+  const lrn = localStorage.getItem('lrn')
+  const email = localStorage.getItem('email')
+  const role = localStorage.getItem('role')
+
   return (
     <div>
       <div className="px-4 sm:px-0 flex justify-start gap-5">
@@ -18,40 +25,27 @@ export default function ProfileLayout() {
         <dl className="divide-y divide-gray-100 grid grid-cols-2">
           <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0 ">
             <dt className="text-sm font-semibold leading-6 text-blue-gray-700 uppercase">Full name:</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Margot Foster:</dd>
+            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{name}</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
             <dt className="text-sm font-semibold leading-6 text-blue-gray-700 uppercase">Role:</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Admin</dd>
+            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{role}</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
             <dt className="text-sm font-semibold leading-6 text-blue-gray-700 uppercase">LRN / TID:</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">123</dd>
+            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{lrn}</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
             <dt className="text-sm font-semibold leading-6 text-blue-gray-700 uppercase">Email:</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">admin@gmail.com</dd>
+            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{email}</dd>
           </div>
 
           <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
             <dt className="text-sm font-semibold leading-6 text-blue-gray-700 uppercase">Class:</dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Sampaguita - 2024</dd>
           </div>
-          <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-semibold leading-6 text-blue-gray-700 uppercase">M. Level:</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">3</dd>
-          </div>
-          <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-semibold leading-6 text-blue-gray-700 uppercase">C. Level:</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">7</dd>
-          </div>
-          
-          <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-semibold leading-6 text-blue-gray-700 uppercase">Status:</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Active</dd>
-          </div>
 
-          <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
+          {/* <div className="px-4 py-6 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
             <dt className="text-sm font-semibold leading-6 text-blue-gray-700 uppercase">Password:</dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                 <Button variant='gradient' color='blue' size='sm'>Change Password</Button>
@@ -63,7 +57,7 @@ export default function ProfileLayout() {
               <span>Edit Profile</span>
               <PencilSquareIcon className='h-4'/>
             </Button>
-          </div>
+          </div> */}
         </dl>
       </div>
     </div>

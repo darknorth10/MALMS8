@@ -7,20 +7,43 @@ import {
   } from "@material-tailwind/react";
 import { Materials } from "./Materials";
 import module from "../../../assets/pdf/modules/mastery_1/module7.pdf"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RelatedVideo from "../../../components/shared/modules/RelatedVideo";
+import { AssessmentButton } from "../../../components/shared/modules/AssessmentButton";
+import { MasteryButton } from "../../../components/shared/modules/MasteryButton";
+import { ActsModule7 } from "../../../components/shared/activity/ActsModule7";
+import { References } from "../../../components/shared/references/References";
+import refImg from "../../../assets/refs/ref_7.png"
 
 
   export const Module7 = () => {
 
     const [moduleSrc, setModuleSrc] = useState(module)
+    const [disable, setDisable] = useState(true)
+    const [disable2, setDisable2] = useState(true)
 
+    const current_mastery = parseFloat(localStorage.getItem("mastery"))
 
     const videoId = "NSol-DeDm7A"
 
     
     const role = localStorage.getItem('role')
+    const url = "/formative/8/"
+    const url2 = "/mastery/23/"
     
+
+    useEffect(() => {
+      if (current_mastery == 1.8) {
+        setDisable(false)
+      }
+
+      if(current_mastery == 1.7) {
+        setDisable2(false)
+      }
+
+    }, [])
+
+
     const data = [
       {
         label: "Materials",
@@ -38,23 +61,24 @@ import RelatedVideo from "../../../components/shared/modules/RelatedVideo";
       {
         label: "Activities",
         value: "activities",
-        desc: `Because it's about motivating the doers. Because I'm here
-        to follow my dreams and inspire other people to follow their dreams, too.`,
+        desc: <div className="max-w-screen-2xl bg-white rounded min-h-[50vh] mx-auto drop-shadow p-8">
+        <ActsModule7/>
+      </div>,
       },
    
       {
         label: "Assessment",
         value: "assessment",
-        desc: `We're not always in the position that we want to be at.
-        We're constantly growing. We're constantly making mistakes. We're
-        constantly trying to express ourselves and actualize our dreams.`,
+        desc: 
+        <>
+          <AssessmentButton disable={disable2} url={url}/>
+          <MasteryButton url={url2} disable={disable} level={1}/>
+        </>,
       },
       {
         label: "References",
         value: "references",
-        desc: `We're not always in the position that we want to be at.
-        We're constantly growing. We're constantly making mistakes. We're
-        constantly trying to express ourselves and actualize our dreams.`,
+        desc: <References refImg={refImg}/>,
       },
 
     ];

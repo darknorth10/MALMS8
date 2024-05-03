@@ -20,6 +20,7 @@ import { useState } from 'react';
 import Loading from '../../components/shared/Loading';
 import { AlertBox } from '../../components/shared/AlertBox';
 import { useNavigate } from 'react-router-dom';
+import malms8 from "../../assets/img/malms8.jpg"
 
 function Copyright(props) {
   return (
@@ -135,7 +136,7 @@ export const Signin = () => {
           sm={4}
           md={9}
           sx={{
-            backgroundImage: `url(${bgImg})`,
+            backgroundImage: `url(${malms8})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -200,9 +201,9 @@ export const Signin = () => {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  {/* <Link href="#" variant="body2">
                     Forgot password?
-                  </Link>
+                  </Link> */}
                 </Grid>
                 <Grid item>
                   <Link2 to="/signup" className='text-blue-700 text-sm underline'>

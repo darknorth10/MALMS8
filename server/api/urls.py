@@ -6,6 +6,11 @@ router = routers.DefaultRouter()
 
 router.register(r'users', views.UserViewSet)
 router.register(r'classes', views.ClassRoomViewSet)
+router.register(r'assessments', views.AssessmentViewSet)
+router.register(r'questions', views.QuestionViewSet)
+router.register(r'act1module1', views.Act1Module1ViewSet)
+router.register(r'scores', views.ScoreViewSet)
+router.register(r'activities', views.ActViewSet)
 
 
 urlpatterns = [

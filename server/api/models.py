@@ -54,11 +54,13 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateField(auto_now_add=True)
     profile_img = models.URLField(max_length=255, default=default_img_url)
     class_id = models.CharField(max_length=50, null=True)
-     
+    mastery = models.DecimalField(max_digits=5, decimal_places=1, default=0)
+    pretest = models.IntegerField(null=True)
+    posttest = models.IntegerField(null=True)
     
     objects = UserAccountManager()
     USERNAME_FIELD = 'lrn'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'email', 'role']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email', 'role', 'mastery', 'pretest', 'posttest']
     
       
     
@@ -84,14 +86,6 @@ class ClassRoom(models.Model):
 
     def __str__(self):
         return self.name
-
-class MasteryLevel(models.Model):
-    student = models.ForeignKey(UserAccount,  on_delete=models.CASCADE)
-    level = models.DecimalField(max_digits=2, decimal_places=1, null=False)
-    
-    def __str__(self) -> str:
-        return self.student
-    
     
     
 class Assessment(models.Model):
@@ -99,6 +93,7 @@ class Assessment(models.Model):
         "formative": "FORMATIVE",
         "post_test": "POST-TEST",
         "pre_test": "PRE-TEST",
+        "mastery": "MASTERY",
     }
     
     level = models.DecimalField(max_digits=2, decimal_places=1)
@@ -106,8 +101,8 @@ class Assessment(models.Model):
     type_of = models.CharField(max_length=50, null=False, choices=TEST_TYPES)
     items = models.IntegerField(null=False)
 
-    def __str__(self) -> str:
-        return self.level
+    def __str__(self):
+        return str(self.level)
     
 class Score(models.Model):
     student = models.ForeignKey(UserAccount,  on_delete=models.CASCADE)
@@ -117,3 +112,45 @@ class Score(models.Model):
     
     def __str__(self):
         return self.student
+    
+class Question(models.Model):
+    assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE)
+    question = models.TextField(max_length=550, null=False)
+    a = models.CharField(max_length=250, null=False)
+    b = models.CharField(max_length=250, null=False)
+    c = models.CharField(max_length=250, null=False)
+    d = models.CharField(max_length=250, null=False)
+    answer = models.CharField(max_length=1, null=False)
+    
+    def __str__(self):
+        return self.question
+
+
+class Act1Module1(models.Model):
+    student = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+    mean = models.TextField(max_length=600, null=False)
+    median = models.TextField(max_length=600, null=False)
+    mode = models.TextField(max_length=600, null=False)
+    feedbacks = models.TextField(max_length=600, null=True)
+    grade = models.IntegerField(null=True)
+    status = models.CharField(max_length=50, default="submitted")
+    
+
+    def __str__(self):
+        return str(self.student.lrn)
+
+
+class Act(models.Model):
+
+    act_no = models.IntegerField(null=False)
+    remarks = models.TextField(max_length=260, null=True)
+    feedback = models.TextField(max_length=660, null=True)
+    grade = models.IntegerField(null=True)
+    student = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+    files = models.FileField(upload_to="activity_files", max_length=100, null=True)
+    def __str__(self):
+        return str(self.student.lrn) + " Activity # " + str(self.act_no) 
+
+
+
+

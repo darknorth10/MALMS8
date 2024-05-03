@@ -5,6 +5,7 @@ import ProfileLayout from "../../../components/shared/profile/ProfileLayout";
 export const Profile = () => {
 
     const { setPagename, setCurrent } = useOutletContext();
+
     useEffect(() => {
         // set page name
         setPagename("My Profile")

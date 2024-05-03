@@ -38,11 +38,7 @@ export const MyClass = () => {
       value: "modules",
       desc: <ModuleAccordion />,
     },
-    {
-      label: "Activities",
-      value: "activities",
-      desc: `Acts`,
-    },
+
     {
       label: "Students",
       value: "students",

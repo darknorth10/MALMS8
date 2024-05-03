@@ -92,6 +92,9 @@ export const Classes = () => {
             redirect('/classroom')
         }
 
+
+        setLoadingOpen(false)
+
     }, [setPagename, setCurrent, role, hasClass, redirect, userID])
 
     

@@ -60,14 +60,6 @@ export const mainListItems = ({setOpenSignOut, handleSignoutOpen, role}) => {
       </ListItemButton>
     </Tooltip>
 
-    {role && role == "admin" || role == "teacher" ? <Tooltip title="Activities" placement="right-start">
-      <ListItemButton onClick={() => redirext('/activities')}>
-        <ListItemIcon>
-          <BarChartIcon className='text-blue-gray-800'/>
-        </ListItemIcon>
-        <ListItemText primary="Activities" />
-      </ListItemButton>
-    </Tooltip> : null }
 
 
     <Tooltip title="Group Chats" placement="right-start">

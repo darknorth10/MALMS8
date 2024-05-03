@@ -10,12 +10,20 @@ import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import { Button } from "@material-tailwind/react";
 import { ProgressBar } from "../../../components/shared/dashboard/ProgressBar";
-
+import img1 from "../../../assets/img/class_invite.svg"
 
 export const Dashboard = () => {
 
     const { setPagename, setCurrent } = useOutletContext();
     const [ role, setRole ] = useState("");
+    const [masterylvl, setMasteryLvl] = useState(0)
+    const [competency, setCompetency] = useState(0)
+    const [progress, setProgress] = useState(0)
+    const [status, setStatus] = useState("Ongoing")
+    const [pretest, setPretest] = useState(0)
+    const [passed, setPassed] = useState(0)
+    const [currentUsers, setCurrentUsers] = useState(0)
+    const token = localStorage.getItem("token")
 
     useEffect(() => {
         // set page name
@@ -28,7 +36,7 @@ export const Dashboard = () => {
         // fetch role
         axios.get("http://127.0.0.1:8000/auth/users/me/",{
             headers: {
-                'Authorization': "Token " + localStorage.getItem("token")
+                'Authorization': "Token " + token
             }
         })
         .then((response) => {
@@ -36,22 +44,66 @@ export const Dashboard = () => {
             setRole(response.data.role)
             
             localStorage.setItem("role", response.data.role)
+            localStorage.setItem("firstname", response.data.first_name)
+            localStorage.setItem("lastname", response.data.last_name)
             localStorage.setItem("lrn", response.data.lrn)
             localStorage.setItem("id", response.data.id)
             localStorage.setItem("email", response.data.email)
+            localStorage.setItem("pretest", response.data.pretest)
+            localStorage.setItem("mastery", response.data.mastery)
             
          
-
         })
         .catch((err) => {
             console.log(err)
         } )
 
         
+
     }, [])
 
-        
+    useEffect(() => {
 
+        var mastery = parseFloat(localStorage.getItem("mastery"))
+        
+        const decimals = mastery - Math.floor(mastery);
+
+        setMasteryLvl(Math.floor(mastery))
+        setCompetency(decimals.toFixed(1) * 10)
+
+        setProgress(((mastery / 8) * 100).toFixed(1))
+
+        if ((mastery / 8) * 100 == 100) {
+            setStatus("Completed")
+        }
+        
+        axios.get("http://localhost:8000/api/users/1/no_page/", {
+            headers: {
+                Authorization: `Token ${token}`,
+            }
+        }).then((response) => {
+            var count = 0;
+            var count_passed = 0;
+
+            response.data.forEach(element => {
+                count += 1
+                if (element.mastery == 8.0) {
+                    count_passed =+ 1
+                }
+            });
+            console.log(count)
+
+            setCurrentUsers(count)
+            setPassed(count_passed)
+
+        }).catch((err) => {
+
+        })
+
+    })
+
+        
+    const pretest_score = localStorage.getItem("pretest")
     return (
         <>
         { role && role == "admin" ? 
@@ -61,7 +113,7 @@ export const Dashboard = () => {
                 
                 <p className="uppercase font-bold text-blue-gray-800 tracking-wider text-xl p-3">Current Students</p>
                 <div className="flex gap-5 w-2/3 p-3 mx-auto justify-evenly text-2xl items-center">
-                    <FaceRoundedIcon color="primary" fontSize="large" style={{fontSize: '50px'}} /> | <p className="font-semibold text-blue-gray-800">23</p>
+                    <FaceRoundedIcon color="primary" fontSize="large" style={{fontSize: '50px'}} /> | <p className="font-semibold text-blue-gray-800">{currentUsers}</p>
                 </div> 
 
             </div>
@@ -69,7 +121,7 @@ export const Dashboard = () => {
 
                 <p className="uppercase font-bold text-blue-gray-800 tracking-wider text-xl p-3">Passed the Course</p>
                 <div className="flex gap-5 w-2/3 p-3 mx-auto justify-evenly text-2xl items-center">
-                    <VerifiedIcon color="success" fontSize="large" style={{fontSize: '50px'}} /> | <p className="font-semibold text-blue-gray-800">23</p>
+                    <VerifiedIcon color="success" fontSize="large" style={{fontSize: '50px'}} /> | <p className="font-semibold text-blue-gray-800">{passed}</p>
                 </div>
                 
             </div>
@@ -83,10 +135,11 @@ export const Dashboard = () => {
             </div>
         </div>
 
-        <h3 className="p-4 uppercase font-black text-xl text-blue-gray-700 tracking-wide">Analytics</h3>
-        <Bargraph graphColor={"dodgerblue"} graphPhrase={"Visualize data on mastery level 1 competencies"} graphTitle={"Matery Level 1: Competency Chart"} iconColor={"bg-blue-700"}/>
-        <Bargraph graphColor={"#2AB7A2"} graphPhrase={"Visualize data on mastery level 2 competencies"} graphTitle={"Matery Level 2: Competency Chart"} iconColor={"bg-teal-300"}/>
-        <Bargraph graphColor={"#121212"} graphPhrase={"Visualize data on mastery level 3 competencies"} graphTitle={"Matery Level 3: Competency Chart"} iconColor={"bg-blue-gray-900"}/>
+        {/* <h3 className="p-4 uppercase font-black text-xl text-blue-gray-700 tracking-wide">Analytics</h3> */}
+        <div className="rounded-lg drop-shadow-md p-5 my-5 bg-white">
+            <img src={img1} className="block w-full h-72" alt="img" />
+        </div>
+
          </>: 
          
          role && role == "student" ? 
@@ -97,7 +150,7 @@ export const Dashboard = () => {
                 
                 <p className="uppercase font-bold text-blue-gray-800 tracking-wider text-xl p-3">Current Mastery Level</p>
                 <div className="flex gap-5 w-2/3 p-3 mx-auto justify-evenly text-2xl items-center">
-                    <DirectionsRunIcon className="text-indigo-900" fontSize="large" style={{fontSize: '50px'}} /> | <p className="font-semibold text-blue-gray-800">Lvl 1</p>
+                    <DirectionsRunIcon className="text-indigo-900" fontSize="large" style={{fontSize: '50px'}} /> | <p className="font-semibold text-blue-gray-800">Lvl {masterylvl}</p>
                 </div>
 
             </div>
@@ -105,7 +158,7 @@ export const Dashboard = () => {
 
                 <p className="uppercase font-bold text-blue-gray-800 tracking-wider text-xl p-3">Current Competency Level</p>
                 <div className="flex gap-5 w-2/3 p-3 mx-auto justify-evenly text-2xl items-center">
-                    <SignalCellularAltIcon color="success" fontSize="large" style={{fontSize: '50px'}} /> | <p className="font-semibold text-blue-gray-800">3</p>
+                    <SignalCellularAltIcon color="success" fontSize="large" style={{fontSize: '50px'}} /> | <p className="font-semibold text-blue-gray-800">{competency}</p>
                 </div>
                 
             </div>
@@ -113,7 +166,7 @@ export const Dashboard = () => {
 
                 <p className="uppercase font-bold text-blue-gray-800 tracking-wider text-xl p-3">Pre-Test Score</p>
                 <div className="flex gap-5 w-2/3 p-3 mx-auto justify-evenly text-2xl items-center">
-                    <EditNoteIcon fontSize="large" style={{fontSize: '50px', color: "teal"}} /> | <p className="font-semibold text-blue-gray-800">30 / 30</p>
+                    <EditNoteIcon fontSize="large" style={{fontSize: '50px', color: "teal"}} /> | <p className="font-semibold text-blue-gray-800">{pretest_score} / 30</p>
                 </div>
 
             </div>
@@ -122,16 +175,17 @@ export const Dashboard = () => {
         <h3 className="p-4 uppercase font-black text-xl text-blue-gray-700 tracking-wide">Progress</h3>
         
         <div className="shadow rounded-md bg-white min-h-24 p-8 mb-6">
-            <ProgressBar statusText={"Ongoing"} progressValue={30} percentage={30}/>
+            <ProgressBar statusText={status} progressValue={progress} percentage={progress}/>
         </div>
         <h3 className="p-4 uppercase font-black text-xl text-blue-gray-700 tracking-wide">Quick Links</h3>
         
         <div className="shadow rounded-md bg-white min-h-24 p-8">
             <div className="grid md:grid-cols-4 gap-5">
-                <Button variant="gradient" color="teal" className="rounded-full" disabled fullWidth>Current Module</Button>
+
+
                 <Button variant="gradient" className="rounded-full" disabled fullWidth>Chats</Button>
                 <Button variant="gradient" color="deep-purple" className="rounded-full" disabled fullWidth>Feedbacks</Button>
-                <Button variant="gradient" color="blue" className="rounded-full" disabled fullWidth>Pre Test</Button>
+                
             </div>
         </div>
          </> : null}

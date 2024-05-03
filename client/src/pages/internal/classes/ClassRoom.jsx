@@ -10,6 +10,7 @@ import {
 import { MyClass } from "./MyClass";
 import { ModuleAccordion } from "../../../components/shared/modules/ModuleAccordion";
 import { StudentList } from "../../../components/shared/class/StudentList";
+import { Feedbacks } from "../../../components/shared/class/Feedbacks";
 
  
 export const ClassRoom = () => {
@@ -24,6 +25,11 @@ export const ClassRoom = () => {
       desc: <ModuleAccordion />,
     },
 
+    {
+      label: "Feedbacks",
+      value: "feedbacks",
+      desc: <Feedbacks/>,
+    },
     {
       label: "Students",
       value: "students",
